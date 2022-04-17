@@ -9,8 +9,17 @@ const Resident=require("../model/resident.model");
 router.get("/",async(req,res)=>{
 
     try {
-         
-        const residents=await Resident.find(req.query).populate({path:"flat",select:{no:1,_id:1}}).populate({path:"block",select:{name:1,_id:1}}).lean().exec();
+         let {page,size}=req.query;
+         if(!page){
+             page=1;
+         }
+         if(!size){
+             size=3;
+         }
+
+         const limit=parseInt(size);
+          const skip=(page-1)*limit;
+        const residents=await Resident.find(req.query).limit(limit).skip(skip).populate({path:"flat",select:{no:1,_id:1}}).populate({path:"block",select:{name:1,_id:1}}).lean().exec();
 
         res.send(residents);
 
