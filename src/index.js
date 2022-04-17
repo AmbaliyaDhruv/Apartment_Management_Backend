@@ -12,9 +12,10 @@ app.use(express.json());
 
 app.use(cors({origin:"*"}));
 
-app.use("/resident",residentController);
+
 app.use("/flat",flatController);
 app.use("/block",blockController);
+app.use("/resident",residentController);
 
 app.listen(port,async()=>{
     try {

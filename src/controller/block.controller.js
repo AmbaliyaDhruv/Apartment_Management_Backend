@@ -13,6 +13,18 @@ try {
 }
 })
 
+router.post("/",async(req,res)=>{
+  try {
+     
+     const block=await Block.create(req.body);
+
+     res.send(block);
+
+  } catch (error) {
+      res.send(error.message)
+  }
+})
+
 
 
 module.exports=router;
