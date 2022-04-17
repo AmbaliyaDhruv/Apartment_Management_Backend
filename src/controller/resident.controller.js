@@ -10,7 +10,7 @@ router.get("/",async(req,res)=>{
 
     try {
          
-        const residents=await Resident.find().populate({path:"flat",select:{no:1,_id:1}}).populate({path:"block",select:{name:1,_id:1}}).lean().exec();
+        const residents=await Resident.find(req.query).populate({path:"flat",select:{no:1,_id:1}}).populate({path:"block",select:{name:1,_id:1}}).lean().exec();
 
         res.send(residents);
 
@@ -19,6 +19,19 @@ router.get("/",async(req,res)=>{
     }
 })
 
+
+
+router.get("/:id",async(req,res)=>{
+    try {
+        
+        const resident=await Resident.findById(req.params.id).populate({path:"flat",select:{no:1,_id:1}}).populate({path:"block",select:{name:1,_id:1}}).lean().exec();
+
+        res.send(resident);
+
+    } catch (error) {
+        res.send(error.message)
+    }
+})
 
 router.post("/",async(req,res)=>{
     try {
